@@ -1,0 +1,106 @@
+apply plugin: 'java'
+apply plugin: 'maven'
+apply plugin: 'signing'
+apply plugin: 'jacoco'
+
+group = "com.stepstone.inbucket"
+version = "0.0.1-SNAPSHOT"
+
+
+repositories {
+    jcenter()
+}
+
+
+
+test.useTestNG()
+
+dependencies {
+    compile 'org.slf4j:slf4j-api:1.7.18'
+    compile 'com.squareup.retrofit2:retrofit:2.0.0'
+    compile 'com.squareup.retrofit2:converter-jackson:2.0.0'
+
+    testCompile 'org.testng:testng:6.8.1'
+    testCompile 'com.squareup.retrofit2:retrofit-mock:2.0.0'
+
+}
+
+task wrapper(type: Wrapper) {
+ gradleVersion = '2.12'
+}
+
+jacoco {
+    toolVersion = "0.7.6.201602180812"
+}
+jacocoTestReport {
+    group = "Reporting"
+    description = "Generate Jacoco coverage reports after running tests."
+    additionalSourceDirs = files(sourceSets.main.allJava.srcDirs)
+    reports {
+        xml.enabled true
+        html.enabled = true
+    }
+}
+
+task javadocJar(type: Jar) {
+    classifier = 'javadoc'
+    from javadoc
+}
+
+task sourcesJar(type: Jar) {
+    classifier = 'sources'
+    from sourceSets.main.allSource
+}
+
+signing {
+    sign configurations.archives
+}
+
+artifacts {
+    archives javadocJar, sourcesJar
+
+}
+
+uploadArchives {
+    repositories {
+        mavenDeployer {
+            beforeDeployment {
+                MavenDeployment deployment -> signing.signPom(deployment)
+            }
+            repository(url: "https://oss.sonatype.org/service/local/staging/deploy/maven2") {
+                authentication(userName: hasProperty('ossrhUsername')?ossrhUsername:'', password: hasProperty('ossrhPassword')?ossrhPassword:'')
+            }
+            snapshotRepository(url: "https://oss.sonatype.org/content/repositories/snapshots") {
+                authentication(userName: hasProperty('ossrhUsername')?ossrhUsername:'', password: hasProperty('ossrhPassword')?ossrhPassword:'')
+            }
+
+            pom.project {
+                name 'Inbucket Client'
+                packaging 'jar'
+                description 'Java client for inbucket'
+                url 'https://github.com/stepstone-tech/inbucket-java-client'
+
+                scm {
+                    connection 'scm:git:git@github.com:stepstone-tech/inbucket-java-client.git'
+                    developerConnection 'scm:git:git@github.com:stepstone-tech/inbucket-java-client.git'
+                    url 'https://github.com/stepstone-tech/inbucket-java-client'
+                }
+
+                licenses {
+                    license {
+                        name 'The Apache License, Version 2.0'
+                        url 'http://www.apache.org/licenses/LICENSE-2.0'
+                    }
+                }
+
+                developers {
+                    developer {
+                        id 'tommywo'
+                        name 'Tomasz Wojtuń'
+                        email 'tomasz.wojtun@stepstone.com'
+                    }
+                }
+            }
+        }
+    }
+}
