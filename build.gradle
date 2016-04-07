@@ -4,13 +4,12 @@ apply plugin: 'signing'
 apply plugin: 'jacoco'
 
 group = "com.stepstone.inbucket"
-version = "0.0.1-SNAPSHOT"
+version = "0.0.1"
 
 
 repositories {
     jcenter()
 }
-
 
 
 test.useTestNG()
