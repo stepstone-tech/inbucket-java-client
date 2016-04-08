@@ -23,7 +23,7 @@ import retrofit2.mock.MockRetrofit;
 import retrofit2.mock.NetworkBehavior;
 
 public class InbucketTestClient extends InbucketClient {
-    public InbucketTestClient(String baseUrl) {
+    public InbucketTestClient(String baseUrl, int networkFailureProcentage) {
         super(baseUrl);
 
         Retrofit retrofit = new Retrofit.Builder()
@@ -32,7 +32,7 @@ public class InbucketTestClient extends InbucketClient {
                 .build();
 
         NetworkBehavior behavior = NetworkBehavior.create();
-        behavior.setFailurePercent(0);
+        behavior.setFailurePercent(networkFailureProcentage);
         MockRetrofit mockRetrofit = new MockRetrofit.Builder(retrofit)
                 .networkBehavior(behavior)
                 .build();

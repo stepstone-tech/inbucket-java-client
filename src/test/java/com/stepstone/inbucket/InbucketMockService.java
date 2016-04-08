@@ -21,8 +21,12 @@ import com.stepstone.inbucket.models.Body;
 import com.stepstone.inbucket.models.MailboxEntry;
 import com.stepstone.inbucket.models.Message;
 
+import okhttp3.Headers;
+import okhttp3.MediaType;
 import okhttp3.ResponseBody;
 
+import okhttp3.internal.http.RealResponseBody;
+import okio.BufferedSource;
 import retrofit2.Call;
 import retrofit2.http.Path;
 import retrofit2.mock.BehaviorDelegate;
@@ -93,13 +97,14 @@ public final class InbucketMockService implements InbucketService {
                     break;
                 }
             }
-            return delegate.returningResponse(response).getMessage(mailboxName,messageId);
+            return delegate.returningResponse(response).getMessage(mailboxName, messageId);
 
         }
 
         @Override
         public Call<ResponseBody> getMessageSource(@Path("name") String mailboxName, @Path("id") String messageId) {
-            return null;
+            ResponseBody responseBody = ResponseBody.create(MediaType.parse("text/plain"),"mailSource");
+            return delegate.returningResponse(responseBody).getMessageSource(mailboxName,messageId);
         }
 
         @Override
