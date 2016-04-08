@@ -11,8 +11,6 @@ repositories {
     jcenter()
 }
 
-
-
 test.useTestNG()
 
 dependencies {
@@ -32,6 +30,7 @@ task wrapper(type: Wrapper) {
 jacoco {
     toolVersion = "0.7.6.201602180812"
 }
+
 jacocoTestReport {
     group = "Reporting"
     description = "Generate Jacoco coverage reports after running tests."
@@ -41,6 +40,8 @@ jacocoTestReport {
         html.enabled = true
     }
 }
+
+check.dependsOn jacocoTestReport
 
 task javadocJar(type: Jar) {
     classifier = 'javadoc'
