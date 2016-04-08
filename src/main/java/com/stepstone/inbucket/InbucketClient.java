@@ -76,17 +76,15 @@ public class InbucketClient {
         return simpleService.getMessageSource(mailboxName, messageId).execute().body().string();
     }
 
+
     /**
      * Method calls inbuckets DELETE /api/v1/mailbox/{mailboxName} endpoint
      * @param mailboxName name of mailbox
-     * @return "OK" string on success null on error
+     * @return "OK" string on success
+     * @throws IOException on error
      */
-    public String deleteMailbox(String mailboxName){
-        try {
+    public String deleteMailbox(String mailboxName) throws IOException {
              return service.deleteMailbox(mailboxName).execute().body();
-        } catch (IOException e) {
-            return null;
-        }
     }
 
     /**
@@ -94,12 +92,9 @@ public class InbucketClient {
      * @param mailboxName name of mailbox
      * @param messageId id of message
      * @return "OK" string on success null on error
+     * @throws IOException on error
      */
-    public String deleteMessage(String mailboxName, String messageId){
-        try {
-            return service.deleteMessage(mailboxName,messageId).execute().body();
-        } catch (IOException e) {
-           return null;
-        }
+    public String deleteMessage(String mailboxName, String messageId) throws IOException {
+        return service.deleteMessage(mailboxName,messageId).execute().body();
     }
 }
