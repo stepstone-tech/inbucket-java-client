@@ -21,17 +21,17 @@ import com.stepstone.inbucket.models.Body;
 import com.stepstone.inbucket.models.MailboxEntry;
 import com.stepstone.inbucket.models.Message;
 
-import okhttp3.Headers;
 import okhttp3.MediaType;
 import okhttp3.ResponseBody;
-
-import okhttp3.internal.http.RealResponseBody;
-import okio.BufferedSource;
 import retrofit2.Call;
 import retrofit2.http.Path;
 import retrofit2.mock.BehaviorDelegate;
 
-import java.util.*;
+import java.util.Collections;
+import java.util.LinkedHashMap;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
 
 public final class InbucketMockService implements InbucketService {
         private final BehaviorDelegate<InbucketService> delegate;
