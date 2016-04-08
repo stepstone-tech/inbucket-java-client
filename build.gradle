@@ -53,9 +53,10 @@ task sourcesJar(type: Jar) {
     from sourceSets.main.allSource
 }
 
-signing {
-    required project.hasProperty("release")
-    sign configurations.archives
+if(project.hasProperty("release")){
+  signing {
+      sign configurations.archives
+  }
 }
 
 artifacts {
