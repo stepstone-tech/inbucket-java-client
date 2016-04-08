@@ -53,6 +53,7 @@ task sourcesJar(type: Jar) {
 }
 
 signing {
+    required project.hasProperty("release")
     sign configurations.archives
 }
 
