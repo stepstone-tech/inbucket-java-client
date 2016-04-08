@@ -30,18 +30,18 @@ public class InbucketClientTest {
 
     @Test
     public void deleteMailbox() throws IOException {
-        InbucketClient client = new InbucketTestClient("http://test.wojtun.pl");
+        InbucketClient client = new InbucketTestClient("http://test.wojtun.pl", 0);
         List<MailboxEntry> mailbox =  client.getMailbox("test");
         Assert.assertEquals(mailbox.size(), 2);
-        client.deleteMailbox("swaks");
-        mailbox = client.getMailbox("swaks");
+        client.deleteMailbox("test");
+        mailbox = client.getMailbox("test");
         Assert.assertEquals(mailbox.size(), 0);
 
     }
 
     @Test
     public void deleteMessage() throws IOException {
-        InbucketClient client = new InbucketTestClient("http://test.wojtun.pl");
+        InbucketClient client = new InbucketTestClient("http://test.wojtun.pl", 0);
         List<MailboxEntry> mailbox =  client.getMailbox("test");
         Assert.assertEquals(mailbox.size(), 2);
         MailboxEntry message = mailbox.get(0);
@@ -53,11 +53,20 @@ public class InbucketClientTest {
 
     @Test
     public void getMessage() throws IOException {
-        InbucketClient client = new InbucketTestClient("http://test.wojtun.pl");
+        InbucketClient client = new InbucketTestClient("http://test.wojtun.pl", 0);
         List<MailboxEntry> mailbox =  client.getMailbox("test");
         MailboxEntry search = mailbox.get(0);
         Message message = client.getMessage("test", search.id);
         Assert.assertEquals(message.body.text,"This is a test mailing.\r\n\r\nThis should be clickable: http://google.com/\r\n");
+    }
+
+    @Test
+    public void getMessageSource() throws IOException {
+        InbucketClient client = new InbucketTestClient("http://test.wojtun.pl", 0);
+        List<MailboxEntry> mailbox =  client.getMailbox("test");
+        MailboxEntry search = mailbox.get(0);
+        String source = client.getMessageSource("test", search.id);
+        Assert.assertEquals(source,"mailSource");
     }
 
 
