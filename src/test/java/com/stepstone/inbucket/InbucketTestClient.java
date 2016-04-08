@@ -32,6 +32,7 @@ public class InbucketTestClient extends InbucketClient {
                 .build();
 
         NetworkBehavior behavior = NetworkBehavior.create();
+        behavior.setFailurePercent(0);
         MockRetrofit mockRetrofit = new MockRetrofit.Builder(retrofit)
                 .networkBehavior(behavior)
                 .build();
