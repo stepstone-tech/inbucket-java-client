@@ -1,5 +1,6 @@
 # Inbucket java client
-[![Travis branch](https://img.shields.io/travis/stepstone-tech/inbucket-java-client/master.svg?style=flat)]()
+[![Travis](https://img.shields.io/travis/stepstone-tech/inbucket-java-client/master.svg?style=flat)](https://travis-ci.org/stepstone-tech/inbucket-java-client)
+[![Codecov](https://img.shields.io/codecov/c/github/stepstone-tech/inbucket-java-client.svg)](https://codecov.io/github/stepstone-tech/inbucket-java-client)
 
 Java client for [Inbucket](https://github.com/jhillyerd/inbucket)
 
