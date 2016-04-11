@@ -16,11 +16,11 @@ limitations under the License.
 
 package com.stepstone.inbucket;
 
+import com.stepstone.inbucket.models.MailboxEntry;
 import com.stepstone.inbucket.models.Message;
+
 import org.testng.Assert;
 import org.testng.annotations.Test;
-
-import com.stepstone.inbucket.models.MailboxEntry;
 
 import java.io.IOException;
 import java.util.List;
