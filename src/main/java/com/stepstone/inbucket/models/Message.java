@@ -19,7 +19,7 @@ package com.stepstone.inbucket.models;
 import java.util.List;
 import java.util.Map;
 
-public class Message extends MailboxEntry{
+public class Message extends MessageInfo {
     public Body body;
     public Map<String,List<String>> header;
 

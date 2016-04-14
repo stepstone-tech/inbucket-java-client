@@ -18,7 +18,7 @@ limitations under the License.
 package com.stepstone.inbucket;
 
 import com.stepstone.inbucket.models.Body;
-import com.stepstone.inbucket.models.MailboxEntry;
+import com.stepstone.inbucket.models.MessageInfo;
 import com.stepstone.inbucket.models.Message;
 
 import okhttp3.MediaType;
@@ -79,8 +79,8 @@ public final class InbucketMockService implements InbucketService {
 
 
         @Override
-        public Call<List<MailboxEntry>> getMailbox(@Path("name") String name) {
-            List<? extends MailboxEntry> response = data.get(name);
+        public Call<List<MessageInfo>> getMailbox(@Path("name") String name) {
+            List<? extends MessageInfo> response = data.get(name);
             if (response == null){
                 response = Collections.emptyList();
             }

@@ -29,9 +29,9 @@ gradle install
 ```
 InbucketClient client = new InbucketClient("http://localhost:9000");
 
-List<MailboxEntry> mailbox =  client.getMailbox("test");
+List<MessageInfo> mailbox =  client.getMailbox("test");
 
-for (MailboxEntry item : mailbox) {
+for (MessageInfo item : mailbox) {
 	Message message = client.getMessage("test",item.id);
 	System.out.println(message.subject);
 	System.out.println(message.body.html);

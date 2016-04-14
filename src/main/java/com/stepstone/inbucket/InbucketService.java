@@ -16,7 +16,7 @@ limitations under the License.
 
 package com.stepstone.inbucket;
 
-import com.stepstone.inbucket.models.MailboxEntry;
+import com.stepstone.inbucket.models.MessageInfo;
 import com.stepstone.inbucket.models.Message;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -29,7 +29,7 @@ import java.util.List;
 interface InbucketService {
 
     @GET("api/v1/mailbox/{name}")
-    Call<List<MailboxEntry>> getMailbox(@Path("name") String mailboxName);
+    Call<List<MessageInfo>> getMailbox(@Path("name") String mailboxName);
 
     @GET("api/v1/mailbox/{name}/{id}")
     Call<Message> getMessage(@Path("name") String mailboxName, @Path("id") String messageId);

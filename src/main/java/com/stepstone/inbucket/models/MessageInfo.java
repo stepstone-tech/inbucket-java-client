@@ -16,7 +16,7 @@ limitations under the License.
 
 package com.stepstone.inbucket.models;
 
-public class MailboxEntry {
+public class MessageInfo {
     public String mailbox;
     public String id;
     public String from;

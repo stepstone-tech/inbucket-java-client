@@ -16,7 +16,7 @@ limitations under the License.
 
 package com.stepstone.inbucket;
 
-import com.stepstone.inbucket.models.MailboxEntry;
+import com.stepstone.inbucket.models.MessageInfo;
 import com.stepstone.inbucket.models.Message;
 
 import retrofit2.Retrofit;
@@ -50,7 +50,7 @@ public class InbucketClient {
      * @return List of MailboxEntry
      * @throws IOException if something went wrong
      */
-    public List<MailboxEntry> getMailbox(String mailboxName) throws IOException {
+    public List<MessageInfo> getMailbox(String mailboxName) throws IOException {
         return service.getMailbox(mailboxName).execute().body();
     }
 
