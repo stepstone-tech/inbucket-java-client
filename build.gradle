@@ -6,6 +6,8 @@ apply plugin: 'jacoco'
 group = "com.stepstone.inbucket"
 version = "1.0.1-SNAPSHOT"
 
+sourceCompatibility = 1.7
+targetCompatibility = 1.7
 
 repositories {
     jcenter()
