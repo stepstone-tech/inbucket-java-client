@@ -11,7 +11,7 @@ gradle install
 
 ## Gradle dependency
 ```
-'com.stepstone.inbucket:inbucket-client:1.0.0'
+'com.stepstone.inbucket:inbucket-client:1.0.1'
 ```
 
 ## Maven dependency
@@ -19,7 +19,7 @@ gradle install
 <dependency>
 	<groupId>com.stepstone.inbucket</groupId>
 	<artifactId>inbucket-client</artifactId>
-	<version>1.0.0</version>
+	<version>1.0.1</version>
 </dependency>	
 ```
 
