@@ -16,6 +16,7 @@ limitations under the License.
 
 package com.stepstone.inbucket;
 
+import com.stepstone.inbucket.models.Attachment;
 import com.stepstone.inbucket.models.MessageInfo;
 import com.stepstone.inbucket.models.Message;
 
@@ -67,6 +68,16 @@ public class InbucketClientTest {
         MessageInfo search = mailbox.get(0);
         String source = client.getMessageSource("test", search.id);
         Assert.assertEquals(source,"mailSource");
+    }
+
+    @Test
+    public void getAttachments() throws IOException {
+        InbucketClient client = new InbucketTestClient("http://test.wojtun.pl", 0);
+        List<MessageInfo> mailbox =  client.getMailbox("test");
+        MessageInfo search = mailbox.get(0);
+        Message message = client.getMessage(search.mailbox,search.id);
+        Attachment attachment = message.attachments.get(0);
+        Assert.assertEquals(attachment.filename, "favicon.png");
     }
 
 

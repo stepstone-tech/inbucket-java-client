@@ -22,5 +22,6 @@ import java.util.Map;
 public class Message extends MessageInfo {
     public Body body;
     public Map<String,List<String>> header;
+    public List<Attachment> attachments;
 
 }

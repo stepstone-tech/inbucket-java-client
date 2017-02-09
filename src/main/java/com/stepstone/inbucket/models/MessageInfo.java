@@ -16,10 +16,13 @@ limitations under the License.
 
 package com.stepstone.inbucket.models;
 
+import java.util.List;
+
 public class MessageInfo {
     public String mailbox;
     public String id;
     public String from;
+    public List<String> to;
     public String date;
     public String subject;
     public int size;

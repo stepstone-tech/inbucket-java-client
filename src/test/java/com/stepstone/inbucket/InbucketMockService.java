@@ -17,6 +17,7 @@ limitations under the License.
 
 package com.stepstone.inbucket;
 
+import com.stepstone.inbucket.models.Attachment;
 import com.stepstone.inbucket.models.Body;
 import com.stepstone.inbucket.models.MessageInfo;
 import com.stepstone.inbucket.models.Message;
@@ -27,11 +28,7 @@ import retrofit2.Call;
 import retrofit2.http.Path;
 import retrofit2.mock.BehaviorDelegate;
 
-import java.util.Collections;
-import java.util.LinkedHashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public final class InbucketMockService implements InbucketService {
         private final BehaviorDelegate<InbucketService> delegate;
@@ -59,7 +56,13 @@ public final class InbucketMockService implements InbucketService {
             message.body = new Body();
             message.body.text = "This is a test mailing.\r\n\r\nThis should be clickable: http://google.com/\r\n";
             message.body.html = "<html>\n<body>\n<p>This is a test mailing <b>in HTML</b></p>\n\n<p>This should be clickable: [...]";
-
+            Attachment attachment = new Attachment();
+            attachment.filename = "favicon.png";
+            attachment.contentType="image/png";
+            attachment.downloadLink="http://localhost:9000/mailbox/dattach/swaks/20131016T164638-0001/0/favicon.png";
+            attachment.viewLink="http://localhost:9000/mailbox/vattach/swaks/20131016T164638-0001/0/favicon.png";
+            attachment.md5 = "a72a7565b6b6587ac15fc35746307d0e";
+            message.attachments = Collections.singletonList(attachment);
             addMessage(message);
             message.id = "20131016T164638-0002";
             message.subject = "Swaks HTML2";
