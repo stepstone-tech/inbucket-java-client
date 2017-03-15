@@ -60,7 +60,7 @@ task sourcesJar(type: Jar) {
 }
 
 signing {
-    required project.hasProperty("release")
+    required project.hasProperty("signing")
     sign configurations.archives
 }
 
