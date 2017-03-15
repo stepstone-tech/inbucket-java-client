@@ -1,5 +1,7 @@
 build
 gradle
+.gradle
+.idea
 gradlew
 gradlew.bat
 inbucket-client.iml
