@@ -16,9 +16,12 @@ limitations under the License.
 
 package com.stepstone.inbucket.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import java.util.List;
 import java.util.Map;
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Message extends MessageInfo {
     public Body body;
     public Map<String,List<String>> header;

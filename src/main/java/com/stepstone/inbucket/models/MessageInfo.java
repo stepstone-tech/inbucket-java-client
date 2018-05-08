@@ -16,8 +16,11 @@ limitations under the License.
 
 package com.stepstone.inbucket.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import java.util.List;
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class MessageInfo {
     public String mailbox;
     public String id;

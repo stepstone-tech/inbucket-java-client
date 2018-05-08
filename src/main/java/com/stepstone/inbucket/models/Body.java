@@ -16,6 +16,9 @@ limitations under the License.
 
 package com.stepstone.inbucket.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Body {
     public String text;
     public String html;
