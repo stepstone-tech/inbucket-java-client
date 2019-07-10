@@ -2,4 +2,6 @@ language: java
 after_success:
   - bash <(curl -s https://codecov.io/bash)
 jdk:
-  - oraclejdk8
+  - openjdk8
+  - openjdk10
+  - openjdk11
