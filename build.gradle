@@ -1,6 +1,7 @@
 plugins {
     id 'pl.allegro.tech.build.axion-release' version '1.13.3'
     id "io.freefair.lombok" version "6.2.0"
+    id "org.sonarqube" version "3.3"
 }
 apply plugin: 'java-library'
 apply plugin: 'signing'
@@ -93,4 +94,12 @@ signing {
 
 javadoc {
     failOnError = false
+}
+
+sonarqube {
+    properties {
+        property "sonar.projectKey", "stepstone-tech_inbucket-java-client"
+        property "sonar.organization", "stepstone-tech"
+        property "sonar.host.url", "https://sonarcloud.io"
+    }
 }
