@@ -17,14 +17,18 @@ limitations under the License.
 package com.stepstone.inbucket.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import java.util.List;
 import java.util.Map;
 
+@Data
+@EqualsAndHashCode(callSuper = true)
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Message extends MessageInfo {
-    public Body body;
-    public Map<String,List<String>> header;
-    public List<Attachment> attachments;
+    private Body body;
+    private Map<String,List<String>> header;
+    private List<Attachment> attachments;
 
 }

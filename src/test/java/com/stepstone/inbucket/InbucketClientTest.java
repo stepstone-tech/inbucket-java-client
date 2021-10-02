@@ -46,7 +46,7 @@ public class InbucketClientTest {
         List<MessageInfo> mailbox =  client.getMailbox("test");
         Assert.assertEquals(mailbox.size(), 2);
         MessageInfo message = mailbox.get(0);
-        client.deleteMessage("test",message.id);
+        client.deleteMessage("test",message.getId());
         mailbox = client.getMailbox("test");
         Assert.assertEquals(mailbox.size(), 1);
 
@@ -57,8 +57,8 @@ public class InbucketClientTest {
         InbucketClient client = new InbucketTestClient("http://test.wojtun.pl", 0);
         List<MessageInfo> mailbox =  client.getMailbox("test");
         MessageInfo search = mailbox.get(0);
-        Message message = client.getMessage("test", search.id);
-        Assert.assertEquals(message.body.text,"This is a test mailing.\r\n\r\nThis should be clickable: http://google.com/\r\n");
+        Message message = client.getMessage("test", search.getId());
+        Assert.assertEquals(message.getBody().getText(),"This is a test mailing.\r\n\r\nThis should be clickable: http://google.com/\r\n");
     }
 
     @Test
@@ -66,7 +66,7 @@ public class InbucketClientTest {
         InbucketClient client = new InbucketTestClient("http://test.wojtun.pl", 0);
         List<MessageInfo> mailbox =  client.getMailbox("test");
         MessageInfo search = mailbox.get(0);
-        String source = client.getMessageSource("test", search.id);
+        String source = client.getMessageSource("test", search.getId());
         Assert.assertEquals(source,"mailSource");
     }
 
@@ -75,9 +75,9 @@ public class InbucketClientTest {
         InbucketClient client = new InbucketTestClient("http://test.wojtun.pl", 0);
         List<MessageInfo> mailbox =  client.getMailbox("test");
         MessageInfo search = mailbox.get(0);
-        Message message = client.getMessage(search.mailbox,search.id);
-        Attachment attachment = message.attachments.get(0);
-        Assert.assertEquals(attachment.filename, "favicon.png");
+        Message message = client.getMessage(search.getMailbox(), search.getId());
+        Attachment attachment = message.getAttachments().get(0);
+        Assert.assertEquals(attachment.getFilename(), "favicon.png");
     }
 
 
