@@ -39,12 +39,12 @@ public final class InbucketMockService implements InbucketService {
             data = new LinkedHashMap<>();
 
             Message message = new Message();
-            message.mailbox = "test";
-            message.id  = "20131016T164638-0001";
-            message.from = "jamehi03@server.com";
-            message.subject = "Test HTML";
-            message.date = "2013-10-16T16:46:38.646370568-07:00";
-            message.size = 705;
+            message.setMailbox("test");
+            message.setId("20131016T164638-0001");
+            message.setFrom("jamehi03@server.com");
+            message.setSubject("Test HTML");
+            message.setDate("2013-10-16T16:46:38.646370568-07:00");
+            message.setSize(705);
             Map<String,List<String>> header = new LinkedHashMap<>();
             header.put("Content-Type", Collections.singletonList("multipart/alternative; boundary=\"----=_MIME_BOUNDARY_000_62717\""));
             header.put("Date",Collections.singletonList("Wed, 16 Oct 2013 16:46:38 -0700"));
@@ -52,32 +52,32 @@ public final class InbucketMockService implements InbucketService {
             header.put("Mime-Version",Collections.singletonList("1.0"));
             header.put("Subject",Collections.singletonList("Test HTML"));
             header.put("To", Collections.singletonList("test@inbucket.local"));
-            message.header = header;
-            message.body = new Body();
-            message.body.text = "This is a test mailing.\r\n\r\nThis should be clickable: http://google.com/\r\n";
-            message.body.html = "<html>\n<body>\n<p>This is a test mailing <b>in HTML</b></p>\n\n<p>This should be clickable: [...]";
+            message.setHeader(header);
+            Body body = new Body();
+            body.setText("This is a test mailing.\r\n\r\nThis should be clickable: http://google.com/\r\n");
+            body.setHtml("<html>\n<body>\n<p>This is a test mailing <b>in HTML</b></p>\n\n<p>This should be clickable: [...]");
+            message.setBody(body);
             Attachment attachment = new Attachment();
-            attachment.filename = "favicon.png";
-            attachment.contentType="image/png";
-            attachment.downloadLink="http://localhost:9000/mailbox/dattach/swaks/20131016T164638-0001/0/favicon.png";
-            attachment.viewLink="http://localhost:9000/mailbox/vattach/swaks/20131016T164638-0001/0/favicon.png";
-            attachment.md5 = "a72a7565b6b6587ac15fc35746307d0e";
-            message.attachments = Collections.singletonList(attachment);
+            attachment.setFilename("favicon.png");
+            attachment.setContentType("image/png");
+            attachment.setDownloadLink("http://localhost:9000/mailbox/dattach/swaks/20131016T164638-0001/0/favicon.png");
+            attachment.setViewLink("http://localhost:9000/mailbox/vattach/swaks/20131016T164638-0001/0/favicon.png");
+            attachment.setMd5("a72a7565b6b6587ac15fc35746307d0e");
+            message.setAttachments(Collections.singletonList(attachment));
             addMessage(message);
-            message.id = "20131016T164638-0002";
-            message.subject = "Swaks HTML2";
+            message.setId("20131016T164638-0002");
+            message.setSubject("Swaks HTML2");
             addMessage(message);
-
 
         }
 
         public void addMessage(Message message){
-            List<Message> messages = data.get(message.mailbox);
+            List<Message> messages = data.get(message.getMailbox());
             if (messages == null){
                 messages = new LinkedList<>();
             }
             messages.add(message);
-            data.put(message.mailbox,messages);
+            data.put(message.getMailbox(), messages);
         }
 
 
@@ -95,7 +95,7 @@ public final class InbucketMockService implements InbucketService {
             List<Message> messages = data.get(mailboxName);
             Message response = null;
             for (Message message : messages) {
-                if (messageId.equals(message.id)){
+                if (messageId.equals(message.getId())){
                     response = message;
                     break;
                 }
@@ -121,7 +121,7 @@ public final class InbucketMockService implements InbucketService {
         public Call<String> deleteMessage(@Path("name") String name, @Path("id") String id) {
             List<Message> messages = data.get(name);
             for (Message message : messages) {
-                if (id.equals(message.id)){
+                if (id.equals(message.getId())){
                     messages.remove(message);
                     break;
                 }

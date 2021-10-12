@@ -1,10 +1,13 @@
 plugins {
-    id 'pl.allegro.tech.build.axion-release' version '1.5.0'
+    id 'pl.allegro.tech.build.axion-release' version '1.13.3'
+    id "io.freefair.lombok" version "6.2.0"
+    id "org.sonarqube" version "3.3"
 }
-apply plugin: 'java'
-apply plugin: 'maven'
+apply plugin: 'java-library'
 apply plugin: 'signing'
 apply plugin: 'jacoco'
+apply plugin: 'maven-publish'
+
 
 
 group = "com.stepstone.inbucket"
@@ -14,101 +17,102 @@ sourceCompatibility = 1.8
 targetCompatibility = 1.8
 
 repositories {
-    jcenter()
+    mavenCentral()
 }
 
 test.useTestNG()
 
 dependencies {
-    compile 'org.slf4j:slf4j-api:1.7.18'
-    compile 'com.squareup.retrofit2:retrofit:2.0.0'
-    compile 'com.squareup.retrofit2:converter-jackson:2.0.0'
+    implementation 'org.slf4j:slf4j-api:1.7.32'
+    implementation 'com.squareup.retrofit2:retrofit:2.9.0'
+    implementation 'com.squareup.retrofit2:converter-jackson:2.9.0'
 
-    testCompile 'org.testng:testng:6.8.1'
-    testCompile 'com.squareup.retrofit2:retrofit-mock:2.0.0'
+    testImplementation 'org.testng:testng:7.4.0'
+    testImplementation 'com.squareup.retrofit2:retrofit-mock:2.9.0'
 
-}
-
-task wrapper(type: Wrapper) {
- gradleVersion = '2.12'
 }
 
 jacoco {
-    toolVersion = "0.7.6.201602180812"
+    toolVersion = "0.8.7"
 }
 
 jacocoTestReport {
     group = "Reporting"
     description = "Generate Jacoco coverage reports after running tests."
-    additionalSourceDirs = files(sourceSets.main.allJava.srcDirs)
     reports {
         xml.enabled true
-        html.enabled = true
     }
 }
 
 check.dependsOn jacocoTestReport
 
-task javadocJar(type: Jar) {
-    classifier = 'javadoc'
-    from javadoc
+java {
+    withSourcesJar()
 }
 
-task sourcesJar(type: Jar) {
-    classifier = 'sources'
-    from sourceSets.main.allSource
-}
-
-signing {
-    required project.hasProperty("signingEnabled")
-    sign configurations.archives
-}
-
-artifacts {
-    archives javadocJar, sourcesJar
-
-}
-
-uploadArchives {
-    repositories {
-        mavenDeployer {
-            beforeDeployment {
-                MavenDeployment deployment -> signing.signPom(deployment)
-            }
-            repository(url: "https://oss.sonatype.org/service/local/staging/deploy/maven2") {
-                authentication(userName: project.hasProperty('ossrhUsername')?ossrhUsername:'', password: project.hasProperty('ossrhPassword')?ossrhPassword:'')
-            }
-            snapshotRepository(url: "https://oss.sonatype.org/content/repositories/snapshots") {
-                authentication(userName: project.hasProperty('ossrhUsername')?ossrhUsername:'', password: project.hasProperty('ossrhPassword')?ossrhPassword:'')
-            }
-
-            pom.project {
-                name 'Inbucket Client'
-                packaging 'jar'
-                description 'Java client for inbucket'
-                url 'https://github.com/stepstone-tech/inbucket-java-client'
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            artifactId = 'inbucket-client'
+            version = scmVersion.version
+            from components.java
+            pom {
+                name = 'Inbucket Client'
+                packaging = 'jar'
+                description = 'Java client for inbucket'
+                url = 'https://github.com/stepstone-tech/inbucket-java-client'
 
                 scm {
-                    connection 'scm:git:git@github.com:stepstone-tech/inbucket-java-client.git'
-                    developerConnection 'scm:git:git@github.com:stepstone-tech/inbucket-java-client.git'
-                    url 'https://github.com/stepstone-tech/inbucket-java-client'
+                    connection = 'scm:git:git@github.com:stepstone-tech/inbucket-java-client.git'
+                    developerConnection = 'scm:git:git@github.com:stepstone-tech/inbucket-java-client.git'
+                    url = 'https://github.com/stepstone-tech/inbucket-java-client'
                 }
 
                 licenses {
                     license {
-                        name 'The Apache License, Version 2.0'
-                        url 'http://www.apache.org/licenses/LICENSE-2.0'
+                        name = 'The Apache License, Version 2.0'
+                        url = 'http://www.apache.org/licenses/LICENSE-2.0'
                     }
                 }
 
                 developers {
                     developer {
-                        id 'tommywo'
-                        name 'Tomasz Wojtuń'
-                        email 'tomasz.wojtun@stepstone.com'
+                        id = 'tommywo'
+                        name = 'Tomasz Wojtuń'
+                        email = 'tomasz.wojtun@stepstone.com'
                     }
                 }
             }
+
         }
+    }
+    repositories {
+        maven {
+            name = "OSSRH"
+            def releasesRepoUrl = "https://oss.sonatype.org/service/local/staging/deploy/maven2"
+            def snapshotsRepoUrl = "https://oss.sonatype.org/content/repositories/snapshots"
+            url = version.endsWith('SNAPSHOT') ? snapshotsRepoUrl : releasesRepoUrl
+            credentials {
+                username = System.getenv("MAVEN_USERNAME")
+                password = System.getenv("MAVEN_PASSWORD")
+            }
+        }
+    }
+}
+
+
+signing {
+    sign publishing.publications.mavenJava
+}
+
+javadoc {
+    failOnError = false
+}
+
+sonarqube {
+    properties {
+        property "sonar.projectKey", "stepstone-tech_inbucket-java-client"
+        property "sonar.organization", "stepstone-tech"
+        property "sonar.host.url", "https://sonarcloud.io"
     }
 }

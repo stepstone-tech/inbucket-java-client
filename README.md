@@ -11,7 +11,7 @@ gradle install
 
 ## Gradle dependency
 ```
-'com.stepstone.inbucket:inbucket-client:1.2.1'
+'com.stepstone.inbucket:inbucket-client:2.0.0'
 ```
 
 ## Maven dependency
@@ -19,7 +19,7 @@ gradle install
 <dependency>
 	<groupId>com.stepstone.inbucket</groupId>
 	<artifactId>inbucket-client</artifactId>
-	<version>1.2.1</version>
+	<version>2.0.0</version>
 </dependency>	
 ```
 
@@ -32,14 +32,14 @@ InbucketClient client = new InbucketClient("http://localhost:9000");
 List<MessageInfo> mailbox =  client.getMailbox("test");
 
 for (MessageInfo item : mailbox) {
-	Message message = client.getMessage("test",item.id);
-	System.out.println(message.subject);
-	System.out.println(message.body.html);
+	Message message = client.getMessage("test",item.getId());
+	System.out.println(message.getSubject());
+	System.out.println(message.getBody().getHtml());
 }
 ```
 
 ## License
-Copyright 2019 StepStone Services
+Copyright 2021 StepStone Services
     
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
