@@ -48,6 +48,7 @@ check.dependsOn jacocoTestReport
 
 java {
     withSourcesJar()
+    withJavadocJar()
 }
 
 publishing {
